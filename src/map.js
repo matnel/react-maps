@@ -69,10 +69,6 @@ var Map = React.createClass({
   // when component is included in the dom, load the JS libary spesific things on this element
   componentDidMount : function() {
 
-    console.log("map mounted");
-
-    console.log( google.maps );
-
     var mapOptions = {
       zoom: this.props.zoom,
       center: new google.maps.LatLng( this.props.latitude , this.props.longitude ),
@@ -87,12 +83,12 @@ var Map = React.createClass({
 
     this.setState( { map : map } );
 
-    this.updateMarkers(this.props.maps_points);
+    this.updateMarkers(this.props.points);
   },
 
   // update markers if needed
   componentWillReceiveProps : function(props) {
-    if( props.maps_points ) this.updateMarkers(props.maps_points);
+    if( props.points ) this.updateMarkers(props.points);
   }
 
 });
@@ -101,17 +97,12 @@ var MapsContainer = React.createClass({
 
   getInitialState: function() {
     return {
-      points : [ {
-        latitude: 0,
-        longitude: 0,
-        label: "Middle of nowhere"
-      } ],
+      points : [],
       ready : true
     };
   },
 
   addPoint : function() {
-
     this.setState( { points : [] } );
   },
 
@@ -120,8 +111,7 @@ var MapsContainer = React.createClass({
 
     return (
       <div>
-        <Map maps_points={this.state.points} zoom={9} />
-        <button onClick={this.addPoint} >Remove point</button>
+        <Map points={this.state.points} zoom={9} />
       </div>
     )
   },
