@@ -1,0 +1,7 @@
+{
+  "name": "react-maps",
+  "version": "0.0.1",
+  "description":"Maps interface to React",
+  "files": ["src"],
+  "main": "src/map.js"
+}
