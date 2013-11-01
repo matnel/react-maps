@@ -1,6 +1,9 @@
 /**
  * @jsx React.DOM
  */
+"use strict";
+
+var React = require('React');
 
 var Map = React.createClass({
 
@@ -8,18 +11,22 @@ var Map = React.createClass({
   getInitialState: function() {
     return {
       map : null,
-      markers : []
+      markers : [],
+      ready : false
     };
   },
 
   // set some default values
   getDefaultProps: function() {
     return {
-      latitude: 60.170833,
-      longitude: 24.9375,
+      latitude: 0,
+      longitude: 0,
       zoom: 4,
       width: 500,
-      height: 500
+      height: 500,
+      points: [],
+      gmaps_api_key: '',
+      gmaps_sensor: false
     }
   },
 
@@ -56,6 +63,8 @@ var Map = React.createClass({
 
   render : function() {
 
+    if( ! this.state.ready ) return(<div></div>);
+
     var style = {
       width: this.props.width,
       height: this.props.height
@@ -66,24 +75,32 @@ var Map = React.createClass({
     );
   },
 
-  // when component is included in the dom, load the JS libary spesific things on this element
+  debug : function() {
+    console.log("Jee!");
+  },
+
   componentDidMount : function() {
 
-    var mapOptions = {
-      zoom: this.props.zoom,
-      center: new google.maps.LatLng( this.props.latitude , this.props.longitude ),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+    window.mapLoaded = (function() {
 
-    console.log("jee");
-    
-    var map = new google.maps.Map( this.getDOMNode(), mapOptions);
+      var mapOptions = {
+        zoom: this.props.zoom,
+        center: new google.maps.LatLng( this.props.latitude , this.props.longitude ),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      
+      var map = new google.maps.Map( this.getDOMNode(), mapOptions);
 
+      this.setState( { map : map, ready : true } );
+      console.log( this.props );
+      this.updateMarkers(this.props.points);
 
+    }).bind(this);
 
-    this.setState( { map : map } );
+    var s =document.createElement('script');
+    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.props.gmaps_api_key + '&sensor=' + this.props.gmaps_sensor + '&callback=mapLoaded';
+    document.head.appendChild( s );
 
-    this.updateMarkers(this.props.points);
   },
 
   // update markers if needed
@@ -93,35 +110,5 @@ var Map = React.createClass({
 
 });
 
-var MapsContainer = React.createClass({
+module.exports = Map;
 
-  getInitialState: function() {
-    return {
-      points : [],
-      ready : true
-    };
-  },
-
-  addPoint : function() {
-    this.setState( { points : [] } );
-  },
-
-  render: function() {
-    if( ! this.state.ready ) return(<div>Wait</div>);
-
-    return (
-      <div>
-        <Map points={this.state.points} zoom={9} />
-      </div>
-    )
-  },
-
-  componentWillMount: function() {
-    // todo: add here the stuff for loading library dynamically
-  }
-});
-
-React.renderComponent(
-  <MapsContainer />,
-  document.getElementById('container')
-);
