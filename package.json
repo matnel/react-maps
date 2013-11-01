@@ -1,7 +1,27 @@
 {
-  "name": "react-maps",
+  "name": "react-map",
   "version": "0.0.1",
-  "description":"Maps interface to React",
-  "files": ["src"],
-  "main": "src/map.js"
+  "keywords": [
+    "react", "map", "googlemaps"
+  ],
+  "homepage": "https://github.com/matnel/react-maps",
+  "bugs": "https://github.com/matnel/react-maps/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "main": "src/mapjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matnel/react-maps.git"
+  },
+  "dependencies": {
+    "React": "git://github.com/facebook/react.git"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=0.10.0"
+  }
 }
