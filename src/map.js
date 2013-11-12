@@ -3,7 +3,11 @@
  */
 "use strict";
 
-var React = require('React');
+var __in_node = (typeof exports !== 'undefined' && this.exports !== exports);
+
+if( __in_node ) {
+  var React = require('React');
+}
 
 var Map = React.createClass({
 
@@ -11,8 +15,7 @@ var Map = React.createClass({
   getInitialState: function() {
     return {
       map : null,
-      markers : [],
-      ready : false
+      markers : []
     };
   },
 
@@ -63,8 +66,6 @@ var Map = React.createClass({
 
   render : function() {
 
-    if( ! this.state.ready ) return(<div></div>);
-
     var style = {
       width: this.props.width,
       height: this.props.height
@@ -73,10 +74,6 @@ var Map = React.createClass({
     return (
       <div style={style}></div>
     );
-  },
-
-  debug : function() {
-    console.log("Jee!");
   },
 
   componentDidMount : function() {
@@ -91,8 +88,7 @@ var Map = React.createClass({
       
       var map = new google.maps.Map( this.getDOMNode(), mapOptions);
 
-      this.setState( { map : map, ready : true } );
-      console.log( this.props );
+      this.setState( { map : map } );
       this.updateMarkers(this.props.points);
 
     }).bind(this);
@@ -110,5 +106,7 @@ var Map = React.createClass({
 
 });
 
-module.exports = Map;
+if( __in_node ) {
+  module.exports = Map;
+}
 
