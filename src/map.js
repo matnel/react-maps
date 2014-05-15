@@ -6,7 +6,7 @@
 var __in_node = (typeof exports !== 'undefined' && this.exports !== exports);
 
 if( __in_node ) {
-  var React = require('React');
+  var React = require('react');
 }
 
 var Map = React.createClass({
