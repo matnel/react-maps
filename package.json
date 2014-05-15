@@ -12,7 +12,7 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
-  "main": "src/mapjs",
+  "main": "src/map.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/matnel/react-maps.git"
