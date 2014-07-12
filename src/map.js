@@ -72,7 +72,7 @@ var Map = React.createClass({
     }
 
     return (
-      <div style={style}></div>
+      React.DOM.div({style:style})
     );
   },
 
@@ -85,7 +85,7 @@ var Map = React.createClass({
         center: new google.maps.LatLng( this.props.latitude , this.props.longitude ),
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
-      
+
       var map = new google.maps.Map( this.getDOMNode(), mapOptions);
 
       this.setState( { map : map } );
@@ -109,4 +109,3 @@ var Map = React.createClass({
 if( __in_node ) {
   module.exports = Map;
 }
-
