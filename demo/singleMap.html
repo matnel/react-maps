@@ -11,14 +11,17 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.10.0/JSXTransformer.js"></script>
 
 <script src="../src/map.js" type="text/javascript"></script>
-
+<style>
+body {text-align:center;}
+pre.hljs, #mapdemo {width:60%;display:inline-block;text-align:left;}
+</style>
 </head>
 
 <body>
 
-<pre></pre>
 <div id="mapdemo"></div>
 
+<pre></pre>
 <script type="text/jsx" class="demo">
   /** @jsx React.DOM */
   points = [
@@ -36,6 +39,7 @@
 <!-- Copy javascript into <pre> and colour it nicely -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
 <script>
+hljs.configure({languages:['js']})
 var pre = document.querySelector('pre')
 pre.innerHTML = document.querySelector('script.demo').innerHTML.replace(/>/g,'&gt;').replace(/</g,'&lt;')
 hljs.highlightBlock(pre)
