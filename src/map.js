@@ -80,26 +80,40 @@ var Map = React.createClass({
   },
 
   componentDidMount : function() {
-
-    window.mapLoaded = (function() {
-
+    var createMap = (function() {
       var mapOptions = {
         zoom: this.props.zoom,
         center: new google.maps.LatLng( this.props.latitude , this.props.longitude ),
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
-      
+
       var map = new google.maps.Map( this.getDOMNode(), mapOptions);
 
       this.setState( { map : map } );
       this.updateMarkers(this.props.points);
-
     }).bind(this);
 
-    var s =document.createElement('script');
-    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.props.gmaps_api_key + '&sensor=' + this.props.gmaps_sensor + '&callback=mapLoaded';
-    document.head.appendChild( s );
+    if (typeof google !== 'undefined') {
+      // scripts already loaded, create map immediately
+      createMap()
+    } else {
+      if (!window.reactMapCallback) {
+        // if this is the first time, load the scripts:
+        var s =document.createElement('script');
+        s.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.props.gmaps_api_key + '&sensor=' + this.props.gmaps_sensor + '&callback=reactMapCallback';
+        document.head.appendChild( s );
 
+        // when the script has loaded, run all the callbacks
+        window.reactMapCallbacks = []
+        window.reactMapCallback = function(){
+          while (window.reactMapCallbacks.length > 0)
+            (window.reactMapCallbacks.shift())() // remove from front
+        }
+      }
+
+      // add a callback to the end of the chain
+      window.reactMapCallbacks.push(createMap)
+    }
   },
 
   // update markers if needed
@@ -112,4 +126,3 @@ var Map = React.createClass({
 if( __in_node ) {
   module.exports = Map;
 }
-
