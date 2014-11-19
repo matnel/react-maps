@@ -75,7 +75,7 @@ var Map = React.createClass({
     }
 
     return (
-      <div style={style}></div>
+      React.DOM.div({style:style})
     );
   },
 

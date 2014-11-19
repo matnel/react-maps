@@ -1,0 +1,49 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+
+<title>Single Map Demo - React-Map</title>
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css">
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.10.0/JSXTransformer.js"></script>
+
+<script src="../src/map.js" type="text/javascript"></script>
+<style>
+body {text-align:center;}
+pre.hljs, #mapdemo {width:60%;display:inline-block;text-align:left;}
+</style>
+</head>
+
+<body>
+
+<div id="mapdemo"></div>
+
+<pre></pre>
+<script type="text/jsx" class="demo">
+  /** @jsx React.DOM */
+  points = [
+    {latitude:60.1876172,longitude:24.815366,title:"HIIT Open Innovation House"},
+    {latitude:60.185478,longitude:24.812257,title:"HIIT Otaniemi"},
+    {latitude:60.2049747,longitude:24.9634712,title:"HIIT Kumpula"}
+  ]
+
+  map = <Map latitude={60.170833} longitude={24.9375} zoom={9} width={500} height={250} points={points} />
+
+  React.renderComponent(map, document.querySelector('#mapdemo'))
+
+</script>
+
+<!-- Copy javascript into <pre> and colour it nicely -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
+<script>
+hljs.configure({languages:['js']})
+var pre = document.querySelector('pre')
+pre.innerHTML = document.querySelector('script.demo').innerHTML.replace(/>/g,'&gt;').replace(/</g,'&lt;')
+hljs.highlightBlock(pre)
+</script>
+
+</body>
+</html>
