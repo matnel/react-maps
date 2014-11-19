@@ -38,7 +38,10 @@ var Map = React.createClass({
 
     var markers = this.state.markers;
     var map = this.state.map;
-
+    
+    // map may not be loaded when parent component re-renders
+    if(map === null) { return false; }
+    
     // remove everything
     markers.forEach( function(marker) {
       marker.setMap(null);
